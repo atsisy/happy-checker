@@ -8,8 +8,7 @@ import javafx.scene.layout.HBox;
 
 import java.util.ArrayList;
 
-import static value.Values.SEARCH_BOX_X;
-import static value.Values.SEARCH_BOX_Y;
+import static value.Values.*;
 
 /**
  * Created by Akihiro on 7/12/2017.
@@ -27,19 +26,11 @@ public class SearchBox {
         root_box.setSpacing(10);
 
         search_box.setOnAction(event -> {
-            GoogleBooksClient client = new GoogleBooksClient("C:\\Users\\Akihiro\\Desktop\\api_key.txt");
-            ArrayList<BookData> data = null;
-
-            try {
-                data = client.query_google_books("inauthor:" + search_box.getText());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            if (data != null) {
-                data.forEach(bookData -> {
-                    System.out.println(bookData.getTitle());
-                });
+            GoogleBooksClient client = new GoogleBooksClient(API_KEY_PATH);
+            ArrayList<BookData> data = client.get_books_data(search_box.getText());
+            for(int i = 0;i < data.size();++i) {
+                BookField field = new BookField(data.get(i));
+                field.register(Main.root, 10, 60 + (BOOK_FIELD_HEIGHT * i));
             }
         });
     }

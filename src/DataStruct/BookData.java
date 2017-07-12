@@ -36,7 +36,7 @@ public class BookData {
         /*
         * 発売日情報
         */
-        if (volume_information.getPublishedDate() != null && volume_information.getPublishedDate().isEmpty()) {
+        if (volume_information.getPublishedDate() != null) {
             published_date = volume_information.getPublishedDate();
         } else {
             published_date = "Unknown";
@@ -73,4 +73,27 @@ public class BookData {
 
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public List<String> getAuthors() {
+        return authors;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String get_published_date() {
+        return published_date;
+    }
 }

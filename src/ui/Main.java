@@ -1,14 +1,17 @@
 package ui;
 
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+
+import static value.Values.WINDOW_HEIGHT;
+import static value.Values.WINDOW_WIDTH;
 
 /**
  * Created by Akihiro on 7/10/2017.
  */
 public class Main extends Application {
+
+    static UIRoot root = new UIRoot();
 
     public static void main(String[] args)
     {
@@ -18,12 +21,13 @@ public class Main extends Application {
     public void start(Stage stage)
     {
         stage.setTitle("Happy Checker");
-        stage.setWidth(768);
-        stage.setHeight(768);
+        stage.setWidth(WINDOW_WIDTH);
+        stage.setHeight(WINDOW_HEIGHT);
 
-        AnchorPane root = new AnchorPane();
+        SearchBox search_box = new SearchBox();
+        search_box.register_to_root(root);
 
-        stage.setScene(new Scene(root));
+        stage.setScene(root.create_scene());
         stage.show();
 
     }

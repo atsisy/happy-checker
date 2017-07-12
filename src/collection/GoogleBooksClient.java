@@ -86,7 +86,7 @@ public class GoogleBooksClient {
         ArrayList<BookData> data = null;
 
         try {
-            data = query_google_books("inauthor:" + query);
+            data = query_google_books(query);
         } catch (Exception e) {
             e.printStackTrace();
         }

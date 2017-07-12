@@ -28,9 +28,11 @@ public class SearchBox {
         search_box.setOnAction(event -> {
             GoogleBooksClient client = new GoogleBooksClient(API_KEY_PATH);
             ArrayList<BookData> data = client.get_books_data(search_box.getText());
-            for(int i = 0;i < data.size();++i) {
-                BookField field = new BookField(data.get(i));
-                field.register(Main.root, 10, 60 + (BOOK_FIELD_HEIGHT * i));
+            if (data != null) {
+                for (int i = 0; i < data.size(); ++i) {
+                    BookField field = new BookField(data.get(i));
+                    field.register(Main.root, 10, 60 + (BOOK_FIELD_HEIGHT * i));
+                }
             }
         });
     }

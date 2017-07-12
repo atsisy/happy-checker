@@ -29,8 +29,29 @@ public class BookField extends Layer {
         graphics_context.setFill(Color.BLACK);
         graphics_context.fillText("タイトル : " + book_data.getTitle(), 10, 20);
         graphics_context.fillText("著者 : " + book_data.getAuthors().toString(), 10, 40);
-        graphics_context.fillText("概要 : " + book_data.getDescription(), 10, 60);
-        graphics_context.fillText("発売時期 : " + book_data.get_published_date(), 10, 80);
+        graphics_context.fillText("発売時期 : " + book_data.get_published_date(), 10, 60);
+        graphics_context.fillText("概要 : " + fix_string(book_data.getDescription()), 10, 80);
+    }
+
+    private String fix_string(String str){
+        if (str.length() > 60)
+        {
+            int offset = 60;
+            StringBuilder builder = new StringBuilder();
+            builder.append(str);
+            builder.insert(offset, '\n');
+            str = builder.toString();
+            offset += 60;
+            while (str.length() - str.lastIndexOf('\n') > 60){
+                StringBuilder local_builder = new StringBuilder();
+                local_builder.append(str);
+                local_builder.insert(offset, '\n');
+                str = local_builder.toString();
+                offset += 60;
+            }
+        }
+
+        return str;
     }
 
     void register(UIRoot root, double x, double y){

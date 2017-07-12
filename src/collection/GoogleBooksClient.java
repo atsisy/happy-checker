@@ -53,7 +53,7 @@ public class GoogleBooksClient {
     }
 
 
-    private ArrayList<BookData> queryGoogleBooks(String query) throws Exception {
+    private ArrayList<BookData> query_google_books(String query) throws Exception {
 
         ArrayList<BookData> books_data = new ArrayList<>();
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
@@ -71,7 +71,6 @@ public class GoogleBooksClient {
          */
         List volumes_list = books.volumes().list(query);
 
-
         Volumes volumes = volumes_list.execute();
         if (volumes.getTotalItems() == 0 || volumes.getItems() == null) {
             return null;
@@ -80,6 +79,19 @@ public class GoogleBooksClient {
         volumes.getItems().forEach(volume -> books_data.add(new BookData(volume)) );
 
         return books_data;
+    }
+
+    public ArrayList<BookData> get_books_data(String query) {
+
+        ArrayList<BookData> data = null;
+
+        try {
+            data = query_google_books("inauthor:" + query);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return data;
     }
 
 }

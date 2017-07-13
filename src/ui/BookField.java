@@ -23,30 +23,12 @@ public class BookField extends Layer {
         draw();
     }
 
-    void draw(){
+    private void draw(){
 
         graphics_context.setFill(Color.WHITE);
         graphics_context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        graphics_context.setFont(new Font(15));
 
-        graphics_context.setFill(Color.BLACK);
-
-        if (!mode) {
-            /*
-            * 参考文献モードが無効
-             */
-            graphics_context.fillText("タイトル : " + book_data.getTitle(), 10, 20);
-            graphics_context.fillText("著者 : " + book_data.getAuthors().toString(), 10, 40);
-            graphics_context.fillText("発売時期 : " + book_data.get_published_date(), 10, 60);
-            graphics_context.fillText("概要 : " + format_string(book_data.getDescription()), 10, 80);
-        }else{
-            /*
-            * 有効
-             */
-            graphics_context.fillText(format_string_reference_style(), 10, 20);
-        }
-
-
+        draw_text();
         draw_frame();
     }
 
@@ -56,6 +38,32 @@ public class BookField extends Layer {
         graphics_context.strokeRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
 
+    private void draw_text(){
+        graphics_context.setFont(new Font(15));
+
+        graphics_context.setFill(Color.BLACK);
+
+        if (!mode) {
+            /*
+            * 参考文献モードが無効
+             */
+            graphics_context.fillText(format_string_normal_mode(), 10, 20);
+        }else{
+            /*
+            * 有効
+             */
+            graphics_context.fillText(format_string_reference_style(), 10, 20);
+        }
+    }
+
+    private String format_string_normal_mode(){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("タイトル : " + book_data.getTitle() + "\n");
+        stringBuilder.append("著者 : " + book_data.getAuthors().toString() + "\n");
+        stringBuilder.append("発売時期 : " + book_data.get_published_date() + "\n");
+        stringBuilder.append("概要 : " + format_string(book_data.getDescription()));
+        return stringBuilder.toString();
+    }
     private String format_string(String str){
         if (str.length() > 60)
         {

@@ -24,6 +24,7 @@ public class BookField extends Layer {
     }
 
     void draw(){
+
         graphics_context.setFill(Color.WHITE);
         graphics_context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         graphics_context.setFont(new Font(15));
@@ -37,16 +38,25 @@ public class BookField extends Layer {
             graphics_context.fillText("タイトル : " + book_data.getTitle(), 10, 20);
             graphics_context.fillText("著者 : " + book_data.getAuthors().toString(), 10, 40);
             graphics_context.fillText("発売時期 : " + book_data.get_published_date(), 10, 60);
-            graphics_context.fillText("概要 : " + fix_string(book_data.getDescription()), 10, 80);
+            graphics_context.fillText("概要 : " + format_string(book_data.getDescription()), 10, 80);
         }else{
             /*
             * 有効
              */
             graphics_context.fillText(format_string_reference_style(), 10, 20);
         }
+
+
+        draw_frame();
     }
 
-    private String fix_string(String str){
+    private void draw_frame(){
+        graphics_context.setLineWidth(5);
+        graphics_context.setStroke(Color.CADETBLUE);
+        graphics_context.strokeRect(0, 0, canvas.getWidth(), canvas.getHeight());
+    }
+
+    private String format_string(String str){
         if (str.length() > 60)
         {
             int offset = 60;
@@ -70,12 +80,14 @@ public class BookField extends Layer {
     private String format_string_reference_style()
     {
         StringBuilder stringBuilder = new StringBuilder();
+
         book_data.getAuthors().forEach(s -> stringBuilder.append(s + " "));
         if (book_data.get_published_date().indexOf('-') != -1) {
             stringBuilder.append("(" + book_data.get_published_date().substring(0, book_data.get_published_date().indexOf('-')) + ") ");
         }else{
             stringBuilder.append("(Unknown) ");
         }
+
         stringBuilder.append(" 『" + book_data.getTitle() + "』 ");
 
         stringBuilder.append(book_data.getPublisher());

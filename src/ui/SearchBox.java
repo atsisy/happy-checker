@@ -2,10 +2,7 @@ package ui;
 
 import DataStruct.BookData;
 import collection.GoogleBooksClient;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.SingleSelectionModel;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 
 import java.util.ArrayList;
@@ -20,15 +17,17 @@ public class SearchBox {
     private final Label search_label = new Label("Search :");
     private TextField search_box;
     private ChoiceBox<String> search_word_type;
+    private CheckBox ref_mode;
     private HBox root_box;
 
     public SearchBox() {
         search_box = new TextField();
         search_word_type = new ChoiceBox<>();
+        ref_mode = new CheckBox("参考文献モード");
         search_word_type.getItems().addAll("タイトル", "著者", "ISBN");
-        search_word_type.getSelectionModel().select("著者");
+        search_word_type.getSelectionModel().select("タイトル");
         root_box = new HBox();
-        root_box.getChildren().addAll(search_label, search_box, search_word_type);
+        root_box.getChildren().addAll(search_label, search_box, search_word_type, ref_mode);
         root_box.setSpacing(10);
 
         search_box.setOnAction(event -> {
@@ -36,7 +35,7 @@ public class SearchBox {
             ArrayList<BookData> data = client.get_books_data(choice_to_query(search_word_type.getValue()) + search_box.getText());
             if (data != null) {
                 for (int i = 0; i < data.size(); ++i) {
-                    BookField field = new BookField(data.get(i));
+                    BookField field = new BookField(data.get(i), is_refmode());
                     field.register(Main.root, 10, 60 + (BOOK_FIELD_HEIGHT * i));
                 }
             }
@@ -58,6 +57,10 @@ public class SearchBox {
                 return "isbn:";
         }
         return "null";
+    }
+
+    private boolean is_refmode(){
+        return this.ref_mode.isSelected();
     }
 
 }

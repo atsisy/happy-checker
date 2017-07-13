@@ -13,11 +13,13 @@ import static value.Values.WINDOW_WIDTH;
 public class BookField extends Layer {
 
     private BookData book_data;
+    private boolean mode;
 
-    public BookField(BookData src_book_data)
+    public BookField(BookData src_book_data, boolean mode)
     {
         super(WINDOW_WIDTH - 50, BOOK_FIELD_HEIGHT);
         book_data = src_book_data;
+        this.mode = mode;
         draw();
     }
 
@@ -27,13 +29,21 @@ public class BookField extends Layer {
         graphics_context.setFont(new Font(15));
 
         graphics_context.setFill(Color.BLACK);
-        /*
-        graphics_context.fillText("タイトル : " + book_data.getTitle(), 10, 20);
-        graphics_context.fillText("著者 : " + book_data.getAuthors().toString(), 10, 40);
-        graphics_context.fillText("発売時期 : " + book_data.get_published_date(), 10, 60);
-        graphics_context.fillText("概要 : " + fix_string(book_data.getDescription()), 10, 80);]
-      */
-        graphics_context.fillText(format_string_reference_style(), 10, 20);
+
+        if (!mode) {
+            /*
+            * 参考文献モードが無効
+             */
+            graphics_context.fillText("タイトル : " + book_data.getTitle(), 10, 20);
+            graphics_context.fillText("著者 : " + book_data.getAuthors().toString(), 10, 40);
+            graphics_context.fillText("発売時期 : " + book_data.get_published_date(), 10, 60);
+            graphics_context.fillText("概要 : " + fix_string(book_data.getDescription()), 10, 80);
+        }else{
+            /*
+            * 有効
+             */
+            graphics_context.fillText(format_string_reference_style(), 10, 20);
+        }
     }
 
     private String fix_string(String str){

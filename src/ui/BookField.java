@@ -27,10 +27,13 @@ public class BookField extends Layer {
         graphics_context.setFont(new Font(15));
 
         graphics_context.setFill(Color.BLACK);
+        /*
         graphics_context.fillText("タイトル : " + book_data.getTitle(), 10, 20);
         graphics_context.fillText("著者 : " + book_data.getAuthors().toString(), 10, 40);
         graphics_context.fillText("発売時期 : " + book_data.get_published_date(), 10, 60);
-        graphics_context.fillText("概要 : " + fix_string(book_data.getDescription()), 10, 80);
+        graphics_context.fillText("概要 : " + fix_string(book_data.getDescription()), 10, 80);]
+      */
+        graphics_context.fillText(format_string_reference_style(), 10, 20);
     }
 
     private String fix_string(String str){
@@ -52,6 +55,14 @@ public class BookField extends Layer {
         }
 
         return str;
+    }
+
+    private String format_string_reference_style(){
+        StringBuilder stringBuilder = new StringBuilder();
+        book_data.getAuthors().forEach(s -> stringBuilder.append(s));
+        stringBuilder.append(" (" + book_data.get_published_date().substring(0, book_data.get_published_date().indexOf('-')) + ") ");
+        stringBuilder.append(" 『" + book_data.getTitle() + "』 ");
+        return stringBuilder.toString();
     }
 
     void register(UIRoot root, double x, double y){

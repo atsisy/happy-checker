@@ -57,11 +57,19 @@ public class BookField extends Layer {
         return str;
     }
 
-    private String format_string_reference_style(){
+    private String format_string_reference_style()
+    {
         StringBuilder stringBuilder = new StringBuilder();
-        book_data.getAuthors().forEach(s -> stringBuilder.append(s));
-        stringBuilder.append(" (" + book_data.get_published_date().substring(0, book_data.get_published_date().indexOf('-')) + ") ");
+        book_data.getAuthors().forEach(s -> stringBuilder.append(s + " "));
+        if (book_data.get_published_date().indexOf('-') != -1) {
+            stringBuilder.append("(" + book_data.get_published_date().substring(0, book_data.get_published_date().indexOf('-')) + ") ");
+        }else{
+            stringBuilder.append("(Unknown) ");
+        }
         stringBuilder.append(" 『" + book_data.getTitle() + "』 ");
+
+        stringBuilder.append(book_data.getPublisher());
+
         return stringBuilder.toString();
     }
 

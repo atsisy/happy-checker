@@ -18,6 +18,7 @@ public class BookData {
     private double rating;
     private double price;
     private String link_more_info;
+    private String publisher;
 
     public BookData(Volume volume) {
         VolumeInfo volume_information = volume.getVolumeInfo();
@@ -40,6 +41,15 @@ public class BookData {
             published_date = volume_information.getPublishedDate();
         } else {
             published_date = "Unknown";
+        }
+
+        /*
+        * 出版社情報
+         */
+        if (volume_information.getPublisher() != null) {
+            publisher = volume_information.getPublisher();
+        } else {
+            publisher = "Unknown";
         }
 
         /*
@@ -95,5 +105,9 @@ public class BookData {
 
     public String get_published_date() {
         return published_date;
+    }
+
+    public String getPublisher() {
+        return publisher;
     }
 }

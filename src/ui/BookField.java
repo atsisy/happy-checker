@@ -58,10 +58,18 @@ public class BookField extends Layer {
 
     private String format_string_normal_mode(){
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("タイトル : " + book_data.getTitle() + "\n");
-        stringBuilder.append("著者 : " + book_data.getAuthors().toString() + "\n");
-        stringBuilder.append("発売時期 : " + book_data.get_published_date() + "\n");
-        stringBuilder.append("概要 : " + format_string(book_data.getDescription()));
+        if(book_data.getTitle() != null) {
+            stringBuilder.append("タイトル : " + book_data.getTitle() + "\n");
+        }
+        if(book_data.getAuthors() != null){
+            stringBuilder.append("著者 : " + book_data.getAuthors().toString() + "\n");
+        }
+        if(book_data.get_published_date() != null){
+            stringBuilder.append("発売時期 : " + book_data.get_published_date() + "\n");
+        }
+        if(book_data.getDescription() != null){
+            stringBuilder.append("概要 : " + format_string(book_data.getDescription()));
+        }
         return stringBuilder.toString();
     }
     private String format_string(String str){
@@ -89,16 +97,22 @@ public class BookField extends Layer {
     {
         StringBuilder stringBuilder = new StringBuilder();
 
-        book_data.getAuthors().forEach(s -> stringBuilder.append(s + " "));
-        if (book_data.get_published_date().indexOf('-') != -1) {
+        if (book_data.getAuthors() != null) {
+            book_data.getAuthors().forEach(s -> stringBuilder.append(s + " "));
+        }
+        if (book_data.get_published_date() != null && book_data.get_published_date().indexOf('-') != -1) {
             stringBuilder.append("(" + book_data.get_published_date().substring(0, book_data.get_published_date().indexOf('-')) + ") ");
         }else{
             stringBuilder.append("(Unknown) ");
         }
 
-        stringBuilder.append(" 『" + book_data.getTitle() + "』 ");
+        if(book_data.getTitle() != null){
+            stringBuilder.append(" 『" + book_data.getTitle() + "』 ");
+        }
 
-        stringBuilder.append(book_data.getPublisher());
+        if(book_data.getPublisher() != null){
+            stringBuilder.append(book_data.getPublisher());
+        }
 
         return stringBuilder.toString();
     }

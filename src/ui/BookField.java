@@ -75,6 +75,9 @@ public class BookField extends Layer {
     private String format_string(String str){
         if (str.length() > 60)
         {
+            if (str.length() > 140){
+                str = shorten(str);
+            }
             int offset = 60;
             StringBuilder builder = new StringBuilder();
             builder.append(str);
@@ -91,6 +94,14 @@ public class BookField extends Layer {
         }
 
         return str;
+    }
+
+    private String shorten(String str)
+    {
+        StringBuilder local_sb = new StringBuilder();
+        local_sb.append(str.substring(0, 140));
+        local_sb.append("・・・");
+        return local_sb.toString();
     }
 
     private String format_string_reference_style()

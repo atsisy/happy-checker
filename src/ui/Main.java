@@ -20,15 +20,21 @@ public class Main extends Application {
 
     public void start(Stage stage)
     {
-        stage.setTitle("Happy Checker");
-        stage.setWidth(WINDOW_WIDTH);
-        stage.setHeight(WINDOW_HEIGHT);
+        init_window(stage);
 
         SearchBox search_box = new SearchBox();
         search_box.register_to_root(root);
 
         stage.setScene(root.create_scene());
         stage.show();
+
+    }
+
+    public void init_window(Stage stage)
+    {
+        stage.setTitle("Happy Checker");
+        stage.setWidth(WINDOW_WIDTH);
+        stage.setHeight(WINDOW_HEIGHT);
 
     }
 
